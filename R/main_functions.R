@@ -57,9 +57,9 @@ fdiscgammagpd <- function(x, useq, shift = NULL, pvector=NULL,
         pvector[3] <- as.vector(quantile(x, 0.9))
 
         xu <- x[x>=pvector[3]]
-        initfgpd <- evmix::fgpd(xu, min(xu)-10^(-5))
-        pvector[4] <- initfgpd$mle[1]
-        pvector[5] <- initfgpd$mle[2]
+        initfgpd <- mev::fit.gpd(xu, min(xu)-10^(-5))
+        pvector[4] <- initfgpd$estimate["scale"]
+        pvector[5] <- initfgpd$estimate["shape"]
     }
 
     bulk <- lapply(seq_along(useq),
@@ -88,9 +88,9 @@ fdiscgammagpd <- function(x, useq, shift = NULL, pvector=NULL,
                                     pvec3 <- as.vector(quantile(x,1-phiu[[i]]))
                                     xu <- x[x>=pvec3]
                                     initfgpd.adj <-
-                                        evmix::fgpd(x, min(xu)-10^(-5))
-                                    pvec4 <- initfgpd.adj$mle[1]
-                                    pvec5 <- initfgpd.adj$mle[2]
+                                        mev::fit.gpd(x, min(xu)-10^(-5))
+                                    pvec4 <- initfgpd.adj$estimate["scale"]
+                                    pvec5 <- initfgpd.adj$estimate["shape"]
                                     tryCatch(expr = fdiscgpd(c(pvec4,pvec5),
                                                              x[tail[[i]]],
                                                              useq[i],

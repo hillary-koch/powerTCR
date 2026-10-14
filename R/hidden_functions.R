@@ -39,9 +39,9 @@ rdiscgamma <- function(n, shape, rate, thresh, shift = 0){
 }
 
 ddiscgpd <- function(x, thresh, sigma, xi, phiu, log = FALSE){
-    up <- evmix::pgpd(x+1, u=thresh, sigmau=sigma, xi=xi)
-    down <- evmix::pgpd(x, u=thresh, sigmau=sigma, xi=xi)
-
+    up <- mev::pgp(x+1, loc=thresh, scale=sigma, shape=xi)
+    down <- mev::pgp(x, loc=thresh, scale=sigma, shape=xi)
+    
     if(!log){
         phiu*(up-down)
     } else{
@@ -55,11 +55,11 @@ pdiscgpd <- function(q, thresh, sigma, xi, phiu){
 }
 
 qdiscgpd <- function(p, thresh, sigma, xi, phiu){
-    evmix::qgpd(p/phiu, u=thresh, sigmau = sigma, xi=xi) %>% floor
+    floor(mev::qgp(p/phiu, loc=thresh, scale = sigma, shape = xi))
 }
 
 rdiscgpd <- function(n, thresh, sigma, xi){
-    evmix::rgpd(n, u=thresh, sigmau=sigma, xi=xi) %>% floor
+    floor(mev::rgp(n, loc=thresh, scale = sigma, shape = xi))
 }
 
 

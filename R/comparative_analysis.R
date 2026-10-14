@@ -104,20 +104,25 @@ JS_spliced <- function(grid, shiftp, shiftq, phip, phiq, shapep, shapeq, ratep,
                        u=threshp, sigma = sigmap,
                        xi = xip, phiu = phip, shift=shiftp,
                        log = FALSE)
-    adjp <- which(P == 0)
-    if(length(adjp) != 0){
-        P[adjp] <- evmix::dgpd(adjp+0.5, u=threshp,
-                              sigmau = sigmap, xi = xip, phiu = phip)
+    adjp <- P == 0
+    if(sum(adjp) > 0){
+        P[adjp] <- mev::dgp(adjp+0.5, loc=threshp,
+                              scale = sigmap, shape = xip, log = FALSE) * phip
     }
 
     Q <- ddiscgammagpd(min(grid):K, shape = shapeq, rate = rateq,
                        u=threshq, sigma = sigmaq,
                        xi = xiq, phiu = phiq, shift=shiftq,
                        log = FALSE)
-    adjq <- which(Q == 0)
-    if(length(adjq) != 0){
-        Q[adjq] <- evmix::dgpd(adjq+0.5, u=threshq,
-                              sigmau = sigmaq, xi = xiq, phiu = phiq)
+    adjq <- Q == 0
+    if(sum(adjq) > 0) {
+        Q[adjq] <- mev::dgp(
+            adjq + 0.5,
+            loc = threshq,
+            scale = sigmaq,
+            shape = xiq,
+            log = FALSE
+        ) * phiq
     }
 
     M <- 0.5*(P+Q)

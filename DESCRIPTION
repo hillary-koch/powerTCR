@@ -1,8 +1,8 @@
 Package: powerTCR
 Type: Package
 Title: Model-Based Comparative Analysis of the TCR Repertoire
-Version: 1.10.3
-Date: 2018-01-23
+Version: 1.10.4
+Date: 2026-10-13
 Author: Hillary Koch
 Maintainer: Hillary Koch <hillary.koch01@gmail.com>
 Description: This package provides a model for the clone size distribution of the TCR repertoire. Further, it permits comparative analysis of TCR repertoire libraries based on theoretical model fits.
@@ -12,10 +12,10 @@ LazyData: true
 Imports:
     cubature,
     doParallel,
-    evmix,
     foreach,
     magrittr,
     methods,
+    mev,
     parallel,
     purrr,
     stats,
@@ -25,3 +25,4 @@ Imports:
 Suggests: BiocStyle, knitr, rmarkdown, RUnit, BiocGenerics
 VignetteBuilder: knitr
 biocViews: Software, Clustering, BiomedicalInformatics
+Config/roxygen2/version: 8.1.1
